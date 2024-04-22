@@ -1,6 +1,7 @@
 import { React } from "react";
 import { useState } from "react";
 import { View, Text, Button, TextInput, ScrollView, StyleSheet } from "react-native";
+import firebase from "../database/firebase";
 
 const CreateUserScreen = () => {
 
@@ -12,6 +13,19 @@ const CreateUserScreen = () => {
 
     const handleChangeText = (name, value) => {
         setState({ ...state, [name]: value })
+    }
+
+    const saveNewUSer = async () => {
+        if (state.name === '') {
+            alert('Ingresa todos los datos')
+        } else {
+            await firebase.db.collection('users').add({
+                name: state.name,
+                email: state.email,
+                phone: state.phone
+            })
+            alert('Usuario Registrado')
+        }
     }
 
     return (
@@ -26,7 +40,7 @@ const CreateUserScreen = () => {
                 <TextInput placeholder="Telefono" onChangeText={(value) => handleChangeText('phone', value)} />
             </View>
             <View>
-                <Button title="Registrar" onPress={() => console.log(state)} />
+                <Button title="Registrar" onPress={() => saveNewUSer()} />
             </View>
         </ScrollView>
     )

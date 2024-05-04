@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, Button, ScrollView, StyleSheet } from "react-native";
 import { db, auth } from "../database/firebase";
 
-const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
+const CreateUserScreen = ({ navigation }) => {
     const [state, setState] = useState({
         name: '',
         email: '',
@@ -29,7 +29,7 @@ const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
                 });
 
                 alert('Usuario registrado correctamente.');
-                navigation.navigate('LoginScreen');  //Regresar al LoginScreen
+                navigation.navigate('LoginScreen');  //Regresar al login
             } catch (error) {
                 console.error("Error al registrar el usuario:", error);
                 alert('Error al registrar usuario: ' + error.message);

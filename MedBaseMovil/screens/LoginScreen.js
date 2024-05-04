@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Button, TextInput, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import { auth } from "../database/firebase"; // Asegúrate de que esta ruta es correcta
+import { auth } from "../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
     const [state, setState] = useState({

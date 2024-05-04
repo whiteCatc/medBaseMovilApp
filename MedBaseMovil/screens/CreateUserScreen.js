@@ -6,7 +6,7 @@ const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
     const [state, setState] = useState({
         name: '',
         email: '',
-        phone: '',
+        curp: '',
         password: ''
     });
 
@@ -15,7 +15,7 @@ const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
     };
 
     const saveNewUser = async () => {
-        if (state.name === '' || state.email === '' || state.phone === '' || state.password === '') {
+        if (state.name === '' || state.email === '' || state.curp === '' || state.password === '') {
             alert('Por favor, completa todos los campos.');
         } else {
             try {
@@ -25,7 +25,7 @@ const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
                 await db.collection('users').doc(user.uid).set({
                     name: state.name,
                     email: state.email,
-                    phone: state.phone
+                    curp: state.curp
                 });
 
                 alert('Usuario registrado correctamente.');
@@ -46,7 +46,7 @@ const CreateUserScreen = ({ navigation }) => {  // Recibe navigation como prop
                 <TextInput placeholder="Email" onChangeText={(value) => handleChangeText('email', value)} />
             </View>
             <View style={styles.inputGroup}>
-                <TextInput placeholder="Teléfono" onChangeText={(value) => handleChangeText('phone', value)} />
+                <TextInput placeholder="CURP" onChangeText={(value) => handleChangeText('curp', value)} />
             </View>
             <View style={styles.inputGroup}>
                 <TextInput placeholder="Contraseña" secureTextEntry={true} onChangeText={(value) => handleChangeText('password', value)} />

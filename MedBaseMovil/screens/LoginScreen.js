@@ -18,10 +18,12 @@ const LoginScreen = () => {
             alert('Ingresa todos los datos')
         } else {
             try {
-                console.log(auth)
+                //console.log(auth)
                 await auth.signInWithEmailAndPassword(state.email, state.password);
+                console.log("Usuario autenticado:", auth.currentUser);
+                alert('Usuario autenticado');
             } catch (error) {
-                alert('Error al iniciar sesión: ' + error.message)
+                alert('Usuario y/o contraseña invalido(s)')
             }
         }
     }

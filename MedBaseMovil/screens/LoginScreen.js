@@ -17,9 +17,11 @@ const LoginScreen = ({ navigation }) => {
             alert('Ingresa todos los datos');
         } else {
             try {
-                await auth.signInWithEmailAndPassword(state.email, state.password);
+                const userCredential = await auth.signInWithEmailAndPassword(state.email, state.password);
+                const user = userCredential.user;
                 console.log("Usuario autenticado:", auth.currentUser);
                 alert('Usuario autenticado');
+                navigation.navigate('UserDetailsScreen', { userId: user.uid });
             } catch (error) {
                 alert('Error al iniciar sesión: ' + error.message);
             }

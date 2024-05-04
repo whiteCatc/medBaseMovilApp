@@ -1,32 +1,30 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, ScrollView, StyleSheet } from "react-native";
-import { auth } from "../database/firebase";
+import { View, Text, Button, TextInput, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { auth } from "../database/firebase"; // Asegúrate de que esta ruta es correcta
 
-const LoginScreen = () => {
-
+const LoginScreen = ({ navigation }) => {
     const [state, setState] = useState({
         email: '',
         password: ''
-    })
+    });
 
     const handleChangeText = (name, value) => {
-        setState({ ...state, [name]: value })
-    }
+        setState({ ...state, [name]: value });
+    };
 
     const loginUser = async () => {
         if (state.email === '' || state.password === '') {
-            alert('Ingresa todos los datos')
+            alert('Ingresa todos los datos');
         } else {
             try {
-                //console.log(auth)
                 await auth.signInWithEmailAndPassword(state.email, state.password);
                 console.log("Usuario autenticado:", auth.currentUser);
                 alert('Usuario autenticado');
             } catch (error) {
-                alert('Usuario y/o contraseña invalido(s)')
+                alert('Error al iniciar sesión: ' + error.message);
             }
         }
-    }
+    };
 
     return (
         <ScrollView style={styles.container}>
@@ -36,25 +34,37 @@ const LoginScreen = () => {
             <View style={styles.inputGroup}>
                 <TextInput placeholder="Contraseña" secureTextEntry={true} onChangeText={(value) => handleChangeText('password', value)} />
             </View>
-            <View>
-                <Button title="Iniciar Sesión" onPress={() => loginUser()} />
+            <Button title="Iniciar Sesión" onPress={loginUser} />
+            <View style={styles.registerContainer}>
+                <Text>¿No tienes cuenta? </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('CreateUserScreens')}>
+                    <Text style={styles.registerText}>Regístrate.</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
         padding: 30,
-        flex: 1
+        flex: 1,
     },
     inputGroup: {
         flex: 1,
         padding: 0,
         marginBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
+        borderBottomColor: '#cccccc',
+    },
+    registerContainer: {
+        flexDirection: 'row',
+        marginTop: 20,
+        justifyContent: 'center',
+    },
+    registerText: {
+        color: '#007BFF',
     }
-})
+});
 
 export default LoginScreen;

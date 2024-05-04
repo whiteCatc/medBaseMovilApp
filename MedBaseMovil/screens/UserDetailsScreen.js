@@ -6,7 +6,7 @@ const UserDetailsScreen = ({ route }) => {
     const [userDetails, setUserDetails] = useState({
         name: '',
         email: '',
-        phone: ''
+        curp: ''
     });
 
     useEffect(() => {
@@ -27,9 +27,9 @@ const UserDetailsScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.header}>Bienvenido</Text>
+            <Text>CURP: {userDetails.curp}</Text>
             <Text>Nombre: {userDetails.name}</Text>
             <Text>Email: {userDetails.email}</Text>
-            <Text>Teléfono: {userDetails.phone}</Text>
         </View>
     );
 };

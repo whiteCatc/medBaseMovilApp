@@ -5,13 +5,13 @@ import 'firebase/compat/firestore';
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDEW1N3McsFF2mxpMU1WcxoQfr7cP6F8Ro",
-    authDomain: "medbase-37455.firebaseapp.com",
-    projectId: "medbase-37455",
-    storageBucket: "medbase-37455.appspot.com",
-    messagingSenderId: "438880361288",
-    appId: "1:438880361288:web:acf98b29535b68d3e0717d",
-    measurementId: "G-HQDB87ERS0"
+    apiKey: "AIzaSyD4YebzK6kC5RAfD886awMAM-XxGTeR1LE",
+    authDomain: "tempmedbse.firebaseapp.com",
+    projectId: "tempmedbse",
+    storageBucket: "tempmedbse.appspot.com",
+    messagingSenderId: "660916490327",
+    appId: "1:660916490327:web:5443ec1b6f12b187839312",
+    measurementId: "G-Q2T7T86NGY"
 };
 
 // Initialize Firebase
@@ -20,5 +20,6 @@ firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore();
 const auth = firebase.auth();
+const EmailAuthProvider = firebase.auth.EmailAuthProvider;
 
-export { db, auth }; 
+export { db, auth, EmailAuthProvider }; 

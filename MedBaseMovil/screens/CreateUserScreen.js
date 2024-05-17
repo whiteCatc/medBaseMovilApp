@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, ScrollView, StyleSheet } from "react-native";
+import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 import { db, auth } from "../database/firebase";
 
 const CreateUserScreen = ({ navigation }) => {
@@ -29,7 +31,7 @@ const CreateUserScreen = ({ navigation }) => {
                 });
 
                 alert('Usuario registrado correctamente.');
-                navigation.navigate('LoginScreen');  //Regresar al login
+                navigation.navigate('LoginScreen');  // Regresar al login
             } catch (error) {
                 console.error("Error al registrar el usuario:", error);
                 alert('Error al registrar usuario: ' + error.message);
@@ -39,36 +41,112 @@ const CreateUserScreen = ({ navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="Nombre" onChangeText={(value) => handleChangeText('name', value)} />
-            </View>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="Email" onChangeText={(value) => handleChangeText('email', value)} />
-            </View>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="CURP" onChangeText={(value) => handleChangeText('curp', value)} />
-            </View>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="Contraseña" secureTextEntry={true} onChangeText={(value) => handleChangeText('password', value)} />
-            </View>
-            <View>
-                <Button title="Registrar" onPress={saveNewUser} />
-            </View>
+            <LinearGradient
+                colors={['#5d7eeb', '#8491ff']}
+                style={styles.gradient}
+            >
+                <View style={styles.logoContainer}>
+                    <Image
+                        source={require('../assets/images/icon2.png')}
+                        style={styles.logo}
+                    />
+                    <Text style={styles.logoText}>Crear Usuario</Text>
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="user" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="Nombre"
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('name', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="mail" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="Email"
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('email', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="file-text" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="CURP"
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('curp', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="lock" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="Contraseña"
+                        secureTextEntry={true}
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('password', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <TouchableOpacity style={styles.button} onPress={saveNewUser}>
+                    <Text style={styles.buttonText}>Registrar</Text>
+                </TouchableOpacity>
+            </LinearGradient>
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+    },
+    gradient: {
         padding: 30,
-        flex: 1
+        justifyContent: 'center',
+        minHeight: '100%',
+    },
+    logoContainer: {
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    logo: {
+        width: 100,
+        height: 100, 
+        resizeMode: 'contain',
+    },
+    logoText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 10,
     },
     inputGroup: {
-        flex: 1,
-        padding: 0,
+        flexDirection: 'row',
         marginBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#cccccc'
+        borderBottomColor: 'white',
+        alignItems: 'center',
+    },
+    icon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        color: 'white',
+        paddingBottom: 10,
+        fontSize: 16,
+    },
+    button: {
+        backgroundColor: 'white',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonText: {
+        color: '#5d7eeb',
+        fontSize: 16,
     }
 });
 

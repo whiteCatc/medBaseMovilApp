@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { Feather } from '@expo/vector-icons';
 import { auth } from "../database/firebase";
 
 const LoginScreen = ({ navigation }) => {
@@ -30,34 +32,100 @@ const LoginScreen = ({ navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="Email" onChangeText={(value) => handleChangeText('email', value)} />
-            </View>
-            <View style={styles.inputGroup}>
-                <TextInput placeholder="Contraseña" secureTextEntry={true} onChangeText={(value) => handleChangeText('password', value)} />
-            </View>
-            <Button title="Iniciar Sesión" onPress={loginUser} />
-            <View style={styles.registerContainer}>
-                <Text>¿No tienes cuenta? </Text>
-                <TouchableOpacity onPress={() => navigation.navigate('CreateUserScreens')}>
-                    <Text style={styles.registerText}>Regístrate.</Text>
+            <LinearGradient
+                colors={['#5d7eeb', '#8491ff']}
+                style={styles.gradient}
+            >
+                <View style={styles.logoContainer}>
+                    <Image
+                        source={require('../assets/images/icon2.png')}
+                        style={styles.logo}
+                    />
+                    <Text style={styles.logoText}>MedBase</Text>
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="mail" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="Email"
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('email', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <View style={styles.inputGroup}>
+                    <Feather name="lock" size={24} color="white" style={styles.icon} />
+                    <TextInput 
+                        placeholder="Contraseña"
+                        secureTextEntry={true}
+                        placeholderTextColor="white"
+                        onChangeText={(value) => handleChangeText('password', value)}
+                        style={styles.input}
+                    />
+                </View>
+                <TouchableOpacity style={styles.button} onPress={loginUser}>
+                    <Text style={styles.buttonText}>Iniciar Sesión</Text>
                 </TouchableOpacity>
-            </View>
+                <View style={styles.registerContainer}>
+                    <Text style={styles.registerText}>¿No tienes cuenta? </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('CreateUserScreens')}>
+                        <Text style={styles.linkText}>Regístrate.</Text>
+                    </TouchableOpacity>
+                </View>
+            </LinearGradient>
         </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        padding: 30,
         flex: 1,
     },
+    gradient: {
+        padding: 30,
+        justifyContent: 'center',
+        minHeight: '100%',
+    },
+    logoContainer: {
+        alignItems: 'center',
+        marginBottom: 30,
+    },
+    logo: {
+        width: 100,
+        height: 100,
+        resizeMode: 'contain',
+    },
+    logoText: {
+        color: 'white',
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginTop: 10,
+    },
     inputGroup: {
-        flex: 1,
-        padding: 0,
+        flexDirection: 'row',
         marginBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: '#cccccc',
+        borderBottomColor: 'white',
+        alignItems: 'center',
+    },
+    icon: {
+        marginRight: 10,
+    },
+    input: {
+        flex: 1,
+        color: 'white',
+        paddingBottom: 10,
+        fontSize: 16,
+    },
+    button: {
+        backgroundColor: 'white',
+        padding: 15,
+        borderRadius: 5,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonText: {
+        color: '#5d7eeb',
+        fontSize: 16,
     },
     registerContainer: {
         flexDirection: 'row',
@@ -65,7 +133,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     registerText: {
-        color: '#007BFF',
+        color: 'white',
+    },
+    linkText: {
+        color: 'white',
+        fontWeight: 'bold',
     }
 });
 

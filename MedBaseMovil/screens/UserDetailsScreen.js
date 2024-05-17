@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, Button, StyleSheet } from "react-native";
 import { db } from "../database/firebase";
 
-const UserDetailsScreen = ({ route }) => {
+const UserDetailsScreen = ({ route, navigation }) => {
     const [userDetails, setUserDetails] = useState({
         name: '',
         email: '',
@@ -10,18 +10,18 @@ const UserDetailsScreen = ({ route }) => {
     });
 
     useEffect(() => {
-        const getUserDetails = async () => {
-            const userId = route.params.userId;
-            const userRef = db.collection('users').doc(userId);
-            const doc = await userRef.get();
+        const userId = route.params.userId;
+        const userRef = db.collection('users').doc(userId);
+
+        const unsubscribe = userRef.onSnapshot(doc => {
             if (doc.exists) {
                 setUserDetails(doc.data());
             } else {
                 console.log('No such document!');
             }
-        };
+        });
 
-        getUserDetails();
+        return () => unsubscribe();
     }, [route.params.userId]);
 
     return (
@@ -30,6 +30,10 @@ const UserDetailsScreen = ({ route }) => {
             <Text>CURP: {userDetails.curp}</Text>
             <Text>Nombre: {userDetails.name}</Text>
             <Text>Email: {userDetails.email}</Text>
+            <Button
+                title="Configuración"
+                onPress={() => navigation.navigate('ConfigScreen', { userId: route.params.userId })}
+            />
         </View>
     );
 };
